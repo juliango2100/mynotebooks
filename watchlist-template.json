@@ -1,0 +1,75 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workspaceName": {
+            "defaultValue": "<Enter Log Analytics Workspace name>",
+            "type": "string",
+            "metadata": {
+                "description": "Workspace name for Log Analytics where Sentinel is setup"
+            }
+        },
+        "WatchlistId": {
+            "type": "string",
+            "minLength": 1,
+            "defaultValue": "<Enter alias of watchlist here>",
+            "metadata": {
+                "description": "Resource group to deploy solution resources"
+            }
+        },
+        "description": {
+            "type": "string",
+            "metadata": {
+                "description": "description"
+            }
+        },
+        "displayName": {
+            "type": "string",
+            "metadata": {
+                "description": "display name"
+            }
+        },
+        "source": {
+            "type": "string",
+            "metadata": {
+                "description": "Local file"
+            }
+        },
+        "provider": {
+            "type": "string",
+            "metadata": {
+                "description": "Microsoft"
+            }
+        },
+
+         "numberOfLinesToSkip": {
+            "type": "string",
+            "defaultValue": "0",
+            "metadata": {
+                "description": "numberOfLinesToSkip"
+            }
+        },
+          "contentType": {
+            "type": "string",
+            "defaultValue": "text/csv",
+            "metadata": {
+                "description": "text/csv"
+            }
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.OperationalInsights/workspaces/providers/Watchlists",
+            "name": "[concat(parameters('workspaceName'),'/Microsoft.SecurityInsights/',parameters('WatchlistId'))]",
+            "apiVersion": "2019-01-01-preview",            
+            "properties": {
+                "description": "[parameters('description')]",
+                "displayName": "[parameters('displayName')]",                
+                "source": "[parameters('source')]",                
+                "provider": "[parameters('provider')]",                
+                "numberOfLinesToSkip": "[parameters('numberOfLinesToSkip')]",                
+                "contentType": "[parameters('contentType')]"
+            }
+        }
+    ]
+}   
